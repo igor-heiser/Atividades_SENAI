@@ -5,19 +5,29 @@ public class Pessoa {
 	private int id;
 	private String nome;
 	private int idade;
+	private String cpf;
 	
 	//contrutor sem ID (será criado pelo banco)
-	public Pessoa(String nome, int idade) {
+	public Pessoa(String nome, int idade, String cpf) {
 		this.nome = nome;
 		this.idade = idade;
+		this.cpf = cpf;
 	}
 
 	//construtor para leitura (id já existe)
-	public Pessoa(int id, String nome, int idade) {
-		super();
+	public Pessoa(int id, String nome, int idade, String cpf) {
 		this.id = id;
 		this.nome = nome;
 		this.idade = idade;
+		this.cpf = cpf;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
 	public int getId() {
@@ -44,10 +54,9 @@ public class Pessoa {
 		this.idade = idade;
 	}
 
-	//método toString
 	@Override
 	public String toString() {
-		return "Pessoa [ id = " + id + ", nome = " + nome + ", idade = " + idade + " ]";
+		return "Pessoa [ id = " + id + ", nome = " + nome + ", idade = " + idade + ", cpf = " + cpf + " ]";
 	}	
 	
 }

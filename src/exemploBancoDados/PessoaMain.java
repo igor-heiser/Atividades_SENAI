@@ -15,15 +15,26 @@ public class PessoaMain {
 			
 			System.out.print("Informe sua idade: ");
 			int idadePessoa = imput.nextInt();
+			imput.nextLine();
 			
-			Pessoa natalino = new Pessoa(nomePessoa, idadePessoa);
+			System.out.println("Informe seu CPF: ");
+			String cpfPessoa = imput.nextLine();
 			
-			PessoaDAO pessoa = new PessoaDAO();
-			pessoa.inserir(natalino);
+			Pessoa natalino = new Pessoa(nomePessoa, idadePessoa, cpfPessoa);
+			
+			PessoaDAO natalinoDAO = new PessoaDAO();
+			natalinoDAO.inserir(natalino);
+			
+			//leitura do banco de dados
+			List<Pessoa> lista = natalinoDAO.listar();
+			
+			for(Pessoa p : lista) {
+				System.out.println(p);
+			}
 			
 		}catch(Exception e) {
 			
-			System.out.println("Erro no banco: " + e.getMessage());
+			System.err.println("Erro no banco: " + e.getMessage());
 			
 		}
 		
