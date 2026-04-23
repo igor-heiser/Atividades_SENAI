@@ -1,4 +1,4 @@
-package crud;
+package crudProduto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,41 +8,43 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import crud.Pessoas;
 import exemploBancoDados.Conexao;
-import exemploBancoDados.Pessoa;
 
-public class PessoasDAO {
+public class ProdutoDAO {
 
-    //inserir
-    public void inserir(Pessoas p)throws SQLException{
-        String sql ="INSERT INTO pessoas(nome,idade) values(?,?)";
+	//inserir
+    public void inserir(Produto p)throws SQLException{
+        String sql ="INSERT INTO produtos(nome, preco, quantidade) values(?, ?, ?)";
             
             try(Connection conn = Conexao.conectar();
                     
                     PreparedStatement stmt = conn.prepareStatement(sql)){
                 
                 stmt.setString(1, p.getNome());
-                stmt.setDouble(2, p.getIdade());
+                stmt.setDouble(2, p.getPreco());
+                stmt.setInt(3, p.getQuantidade());
                 
                 stmt.executeUpdate();
-                System.out.println("Pessoa adicionda com sucesso!");
+                System.out.println("Produto adicionda com sucesso!");
             }
     }
     
     //read
-    public List<Pessoas> listar()throws SQLException{
+    public List<Produto> listar()throws SQLException{
         
-        List<Pessoas> lista = new ArrayList<>();
-        String sql = "SELECT * FROM Pessoas";
+        List<Produto> lista = new ArrayList<>();
+        String sql = "SELECT * FROM produtos";
         
         try (Connection conn = Conexao.conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql)){
                     
             while (rs.next()) {
-                lista.add(new Pessoas(rs.getInt("id"),
+                lista.add(new Produto(rs.getInt("id"),
                             rs.getString("nome"),
-                            rs.getInt("idade")
+                            rs.getDouble("preco"),
+                            rs.getInt("quantidade")
                         ));
                 
                 
@@ -53,15 +55,16 @@ public class PessoasDAO {
     
     // update
     
-    public void atualizar(Pessoas p) throws SQLException{
+    public void atualizar(Produto p) throws SQLException{
         String sql = "UPDATE pessoas SET nome = ?, idade = ? where id=?";
         
         try(Connection conn = Conexao.conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)){
         
                     stmt.setString(1, p.getNome());
-                    stmt.setInt(2, p.getIdade());
-                    
+                    stmt.setDouble(2, p.getPreco());
+                    stmt.setInt(3, p.getQuantidade());
+
                     stmt.executeUpdate();
                     System.out.println("Dados atualizados!");
                     
@@ -71,7 +74,7 @@ public class PessoasDAO {
     //excluir/delete
     
     public void excluir(int id) throws SQLException{
-        String sql = "DELETE from people where id= ?";
+        String sql = "DELETE from produtos where id= ?";
         
         try(Connection conn = Conexao.conectar();
                 PreparedStatement stmt = conn.prepareStatement(sql)){
